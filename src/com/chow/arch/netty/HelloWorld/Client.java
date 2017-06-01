@@ -1,5 +1,6 @@
 package com.chow.arch.netty.HelloWorld;
 
+import com.chow.arch.netty.TcpPackageDeal.ClientHandler;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelFuture;

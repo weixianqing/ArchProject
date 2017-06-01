@@ -15,8 +15,8 @@ public class ClientHandler extends ChannelInboundHandlerAdapter
     {
         try
         {
-            String request = (String) msg;
-            System.out.println("msg from server:" + request);
+            String response = (String) msg;
+            System.out.println("client get message from server:" + response);
         } finally
         {
             ReferenceCountUtil.release(msg);

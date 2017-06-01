@@ -12,6 +12,7 @@ public class ServerHandler extends ChannelInboundHandlerAdapter
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception
     {
+        System.out.println("server channel active...");
     }
 
     @Override
@@ -27,6 +28,7 @@ public class ServerHandler extends ChannelInboundHandlerAdapter
     @Override
     public void channelReadComplete(ChannelHandlerContext ctx) throws Exception
     {
+        System.out.println("channel read complete...");
     }
 
     @Override

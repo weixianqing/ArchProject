@@ -29,7 +29,7 @@ public class Client
                     @Override
                     protected void initChannel(SocketChannel ch) throws Exception
                     {
-                        ByteBuf buf = Unpooled.copiedBuffer("S_".getBytes());
+                        ByteBuf buf = Unpooled.copiedBuffer("$_".getBytes());
                         ch.pipeline().addLast(new DelimiterBasedFrameDecoder(1024, buf));
                         ch.pipeline().addLast(new StringDecoder());
                         ch.pipeline().addLast(new ClientHandler());
@@ -37,9 +37,10 @@ public class Client
                 });
 
         ChannelFuture channelFuture = bootstrap.connect("127.0.0.1", 8765).sync();
-        channelFuture.channel().writeAndFlush("aa$_".getBytes());
-        channelFuture.channel().writeAndFlush("bbbb$_".getBytes());
-        channelFuture.channel().writeAndFlush("ccccccccc$_".getBytes());
+        System.out.println("client start...");
+        channelFuture.channel().writeAndFlush(Unpooled.wrappedBuffer("aa$_".getBytes()));
+        channelFuture.channel().writeAndFlush(Unpooled.wrappedBuffer("bbbb$_".getBytes()));
+        channelFuture.channel().writeAndFlush(Unpooled.wrappedBuffer("cccccc$_".getBytes()));
 
         channelFuture.channel().closeFuture().sync();
         group.shutdownGracefully();
