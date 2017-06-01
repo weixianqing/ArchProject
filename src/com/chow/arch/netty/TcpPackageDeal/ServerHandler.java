@@ -1,7 +1,6 @@
 package com.chow.arch.netty.TcpPackageDeal;
 
 import io.netty.buffer.Unpooled;
-import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 
@@ -23,7 +22,8 @@ public class ServerHandler extends ChannelInboundHandlerAdapter
         System.out.println("Server get msg:" + request);
         String response = "this is msg from client.$_hello, nice to meet you.$_";
 
-        ctx.writeAndFlush(Unpooled.copiedBuffer(response.getBytes())).addListener(ChannelFutureListener.CLOSE);
+//        ctx.writeAndFlush(Unpooled.copiedBuffer(response.getBytes())).addListener(ChannelFutureListener.CLOSE);
+        ctx.writeAndFlush(Unpooled.copiedBuffer(response.getBytes()));
     }
 
     @Override
