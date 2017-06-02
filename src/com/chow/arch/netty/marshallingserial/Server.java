@@ -33,6 +33,7 @@ public class Server
                     {
                         ch.pipeline().addLast(MarshallingCodeCFactory.buildMarshallingDecoder());
                         ch.pipeline().addLast(MarshallingCodeCFactory.buildMarshallingEncoder());
+                        ch.pipeline().addLast(new ServerHandler());
                     }
                 });
 
