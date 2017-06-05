@@ -1,6 +1,5 @@
 package com.chow.arch.utils;
 
-import org.jboss.marshalling.ByteOutputStream;
 
 import java.io.*;
 import java.util.zip.GZIPInputStream;
