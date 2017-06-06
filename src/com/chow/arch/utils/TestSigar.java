@@ -12,9 +12,24 @@ import java.util.Properties;
  */
 public class TestSigar
 {
-    public static void main(String[] args)
+    public static void main(String[] args) throws UnknownHostException, SigarException
     {
-
+        property();
+        System.out.println("---------------------------------");
+        cpu();
+        System.out.println("---------------------------------");
+        memory();
+        System.out.println("---------------------------------");
+        os();
+        System.out.println("---------------------------------");
+        who();
+        System.out.println("---------------------------------");
+        file();
+        System.out.println("---------------------------------");
+        net();
+        System.out.println("---------------------------------");
+        ethernet();
+        System.out.println("---------------------------------");
     }
 
     public static void property() throws UnknownHostException
@@ -233,7 +248,20 @@ public class TestSigar
 
         for (int i = 0; i < ifaces.length; i++)
         {
-            sigar.getNetInterfaceConfig(ifaces[i]);
+            NetInterfaceConfig config = sigar.getNetInterfaceConfig(ifaces[i]);
+
+            if (NetFlags.LOOPBACK_ADDRESS.equals(config.getAddress()) || (NetFlags.IFF_LOOPBACK & config.getFlags()) != 0
+                    || NetFlags.NULL_HWADDR.equals(config.getHwaddr()))
+            {
+                continue;
+            }
+
+            System.out.println(config.getName() + "IP地址:" + config.getAddress());
+            System.out.println(config.getName() + "网管广播地址:" + config.getBroadcast());
+            System.out.println(config.getName() + "网卡MAC地址:" + config.getHwaddr());
+            System.out.println(config.getName() + "子网掩码:" + config.getNetmask());
+            System.out.println(config.getName() + "网卡描述信息:" + config.getDescription());
+            System.out.println(config.getName() + "网卡类型:" + config.getType());
         }
     }
 }
