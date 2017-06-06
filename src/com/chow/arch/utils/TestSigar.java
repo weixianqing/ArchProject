@@ -207,20 +207,36 @@ public class TestSigar
             System.out.println("IP地址：" + ifConfig.getAddress());
             System.out.println("子网掩码：" + ifConfig.getNetmask());
 
-            if ((ifConfig.getFlags() & 1l) <= 0l)
+            if ((ifConfig.getFlags() & 1L) <= 0l)
             {
                 System.out.println("IFF_UP...skipping getNetInterfaceStat");
                 continue;
             }
 
             NetInterfaceStat ifStat = sigar.getNetInterfaceStat(name);
-            System.out.println(name + "接收的总包裹数：" + ifStat.getRxPackets());
+            System.out.println(name + "接收的总包数：" + ifStat.getRxPackets());
+            System.out.println(name + "发送的总包数：" + ifStat.getTxPackets());
+            System.out.println(name + "接受到的总字节数：" + ifStat.getRxBytes());
+            System.out.println(name + "发送的总字节数：" + ifStat.getTxBytes());
+            System.out.println(name + "接受到错误数：" + ifStat.getRxErrors());
+            System.out.println(name + "接受到错误数：" + ifStat.getRxErrors());
+            System.out.println(name + "发送数据的错误数：" + ifStat.getTxErrors());
+            System.out.println(name + "接受丢弃的包数：" + ifStat.getRxDropped());
+            System.out.println(name + "发送丢弃的包数：" + ifStat.getTxDropped());
+        }
+    }
+
+    private static void ethernet() throws SigarException
+    {
+        Sigar sigar = new Sigar();
+        String[] ifaces = sigar.getNetInterfaceList();
+
+        for (int i = 0; i < ifaces.length; i++)
+        {
+            sigar.getNetInterfaceConfig(ifaces[i]);
         }
     }
 }
-
-
-
 
 
 
