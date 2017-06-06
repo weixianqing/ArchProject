@@ -33,6 +33,7 @@ public class ClientHeartBeatHandler extends ChannelInboundHandlerAdapter
     {
         address = InetAddress.getLocalHost();
         String ip = address.getHostAddress();
+        System.out.println(ip);
         String key = "1234";
         String auth = ip + "," + key;
         ctx.writeAndFlush(auth);
@@ -48,7 +49,8 @@ public class ClientHeartBeatHandler extends ChannelInboundHandlerAdapter
                 String ret = (String) msg;
                 if (SUCCESS_KEY.equals(ret))
                 {
-                    this.heartBeat = this.scheduler.scheduleWithFixedDelay(new HeartBeatTask(ctx), 5, 1, TimeUnit.SECONDS);
+                    this.heartBeat = this.scheduler.scheduleWithFixedDelay(new HeartBeatTask(ctx),
+                            5, 1, TimeUnit.SECONDS);
                     System.out.println(msg);
                 } else
                 {
@@ -113,6 +115,8 @@ public class ClientHeartBeatHandler extends ChannelInboundHandlerAdapter
 
                 requestInfo.setCpuPercMap(cpuPercMap);
                 requestInfo.setMemoryMap(memoryMap);
+
+                ctx.writeAndFlush(requestInfo);
             } catch (SigarException e)
             {
                 e.printStackTrace();
@@ -120,22 +124,3 @@ public class ClientHeartBeatHandler extends ChannelInboundHandlerAdapter
         }
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

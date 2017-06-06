@@ -16,12 +16,17 @@ public class ServerHeartBeatHandler extends ChannelInboundHandlerAdapter
 
     static
     {
-        AUTH_IP_MAP.put("172.18.2.163", "1234");
+        AUTH_IP_MAP.put("10.4.13.71", "1234");
     }
 
     private boolean auth(ChannelHandlerContext ctx, Object msg)
     {
         String[] ret = ((String) msg).split(",");
+
+        System.out.println("ret 0:"+ret[0]);
+        System.out.println("ret 1:"+ret[1]);
+        System.out.println("auth_ip_map.get(ret[0]):"+AUTH_IP_MAP.get(ret[0]));
+
         String auth = AUTH_IP_MAP.get(ret[0]);
 
         if (auth != null && auth.equals(ret[1]))
