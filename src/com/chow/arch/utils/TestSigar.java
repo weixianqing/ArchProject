@@ -29,7 +29,6 @@ public class TestSigar
         net();
         System.out.println("---------------------------------");
         ethernet();
-        System.out.println("---------------------------------");
     }
 
     public static void property() throws UnknownHostException
