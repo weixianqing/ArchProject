@@ -159,10 +159,17 @@ public class TestSigar
         }
     }
 
-    private static void file() throws SigarException
+    private static void file()
     {
         Sigar sigar = new Sigar();
-        FileSystem[] fileSystemList = sigar.getFileSystemList();
+        FileSystem[] fileSystemList = new FileSystem[0];
+        try
+        {
+            fileSystemList = sigar.getFileSystemList();
+        } catch (SigarException e)
+        {
+            e.printStackTrace();
+        }
         for (int i = 0; i < fileSystemList.length; i++)
         {
             System.out.println("分区盘符名称" + i);
@@ -174,7 +181,14 @@ public class TestSigar
             System.out.println("盘符类型名：" + fileSystem.getTypeName());
             System.out.println("盘符文件系统类型：" + fileSystem.getType());
 
-            FileSystemUsage usag = sigar.getFileSystemUsage(fileSystem.getDirName());
+            FileSystemUsage usage = null;
+            try
+            {
+                usage = sigar.getFileSystemUsage(fileSystem.getDirName());
+            } catch (SigarException e)
+            {
+                e.printStackTrace();
+            }
 
             switch (fileSystem.getType())
             {
@@ -183,12 +197,12 @@ public class TestSigar
                 case 1:
                     break;
                 case 2:
-                    System.out.println(fileSystem.getDevName() + "总大小：" + usag.getTotal() + "Kb");
-                    System.out.println(fileSystem.getDevName() + "剩余大小：" + usag.getFree() + "Kb");
-                    System.out.println(fileSystem.getDevName() + "可用大小：" + usag.getAvail() + "Kb");
-                    System.out.println(fileSystem.getDevName() + "已经使用量：" + usag.getUsed() + "Kb");
+                    System.out.println(fileSystem.getDevName() + "总大小：" + usage.getTotal() + "Kb");
+                    System.out.println(fileSystem.getDevName() + "剩余大小：" + usage.getFree() + "Kb");
+                    System.out.println(fileSystem.getDevName() + "可用大小：" + usage.getAvail() + "Kb");
+                    System.out.println(fileSystem.getDevName() + "已经使用量：" + usage.getUsed() + "Kb");
 
-                    double usePercent = usag.getUsePercent();
+                    double usePercent = usage.getUsePercent();
                     System.out.println(fileSystem.getDevName() + "资源利用率：" + usePercent);
                     break;
                 case 3:
@@ -201,11 +215,9 @@ public class TestSigar
                     break;
             }
 
-            System.out.println(fileSystem.getDevName() + "读出" + usag.getDiskReads());
-            System.out.println(fileSystem.getDevName() + "写入" + usag.getDiskWrites());
+            System.out.println(fileSystem.getDevName() + "读出" + usage.getDiskReads());
+            System.out.println(fileSystem.getDevName() + "写入" + usage.getDiskWrites());
         }
-
-        return;
     }
 
     private static void net() throws SigarException
