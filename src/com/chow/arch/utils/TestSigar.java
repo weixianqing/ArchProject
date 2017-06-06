@@ -190,7 +190,7 @@ public class TestSigar
 
                     double usePercent = usag.getUsePercent();
                     System.out.println(fileSystem.getDevName() + "资源利用率：" + usePercent);
-
+                    break;
                 case 3:
                     break;
                 case 4:
